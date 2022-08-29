@@ -1,30 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Clara-indumentaria</title>
 </head>
 <body>
     <div>
-        <h1>BIENVENIDO A NUESTRA TIENDA DE ELECTRODOMESTICOS</h1>
-        <h1>Abonando en efectivo o transferencia tenes un 20% de descuento.</h1>
-        <h2>Podes pagar en 3, 6 o 12 cuotas sin interes.</h2>
+        <h1>CLARA INDUMENTARIA</h1>
+    </div>
+    <div>
+        <nav>
+            <ul>
+                <li>Inicio</li>
+                <li>Productos</li>
+                <li>Nosotros</li>
+                <li>Contacto</li>
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <p>SUSCRIBETE A NUESTRO NEWSLETTER PARA RECIBIR NOVEDADES</p>
+        <label for="text">nombre</label>
+        <input type="text">
+
+        <label for="text">apellido</label>
+        <input type="text">
+
+        <label for="mail">email</label>
+        <input type="mail">
     </div>
     <div>
         <h2>Seleccione un producto:</h2>
         <select name="productos" id="">
-            <option value="heladera">HELADERA $90.000</option>
-            <option value="cocina">COCINA $110.000</option>
-            <option value="lavarropas">LAVARROPAS $100.000</option>
-            <option value="microondas">MICROONDAS $50.000</option>
+            <option value="campera">CAMPERA $20.000</option>
+            <option value="jean">JEAN $8.000</option>
+            <option value="mochila">MOCHILA $5000</option>
+            <option value="sweter">SWETER $3000</option>
         </select>
     </div>
     <div>
         <h2>Seleccione la cantidad que desea llevar:</h2>
-        <label for="text"> </label>
-        <input type="text">
+        <select name="cantidad" id="">
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+            <option value="">4</option>
+            <option value="">5</option>
+        </select>
     </div>
     <div>
         <h2>Seleccione en cuantas cuotas desea abonar</h2>
@@ -37,8 +61,14 @@
     <div>
         <button type="submit">Comprar</button>
     </div>
-
-
-    <script src="objetos.js"></script>
+    <footer>
+        <ul>
+            <li>Inicio</li>
+            <li>Productos</li>
+            <li>Nosotros</li>
+            <li>Contacto</li>
+        </ul>
+    </footer>
+    <script src="miarchivo.js"></script>
 </body>
 </html>
