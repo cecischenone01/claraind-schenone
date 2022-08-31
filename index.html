@@ -20,16 +20,22 @@
             </ul>
         </nav>
     </div>
+    
     <div>
         <p>SUSCRIBETE A NUESTRO NEWSLETTER PARA RECIBIR NOVEDADES</p>
+        
         <label for="text">nombre</label>
-        <input type="text">
+        <input type="text" id="nombre_usuario"> <br>
 
+        
         <label for="text">apellido</label>
-        <input type="text">
+        <input type="text" id="apellido_usuario"><br>
 
         <label for="mail">email</label>
-        <input type="mail">
+        <input type="mail" id="email_usuario"><br>
+
+        <button onclick="saludar()">Enviar</button>
+        <div id="mensaje"></div>
     </div>
     <div>
         <h2>Seleccione un producto:</h2>

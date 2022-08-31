@@ -14,20 +14,35 @@ class Usuario_newsletter {
     }
 }
 // newsletter
-alert("SUSCRIBETE A NUESTRO NEWSLETTER PARA RECIBIR NOVEDADES")
+let ingreso_usuario = document.getElementById ("nombre_usuario");
+let ingreso_apellido_usuario = document.getElementById ("apellido_usuario")
+let ingreso_email = document.getElementById ("email_usuario") 
 
-let ingreso_usuario = prompt("ingrese su nombre:");
-let ingreso_apellido_usuario = prompt("ingrese su apellido:");
-let ingreso_email = prompt("ingrese su email:");
-
-let nuevo_usuario = new Usuario_newsletter (ingreso_usuario, ingreso_apellido_usuario, ingreso_email);
-
-function saludar (nombre){
-    alert(`Bienvenido/a a nuestra comunidad ${nombre}, ya estas registrado`);
+function saludar (){
+    let mensaje= document.getElementById("mensaje");
+    if ((ingreso_usuario.value != "") && (ingreso_apellido_usuario.value != "") && (ingreso_email.value != "")){
+        mensaje.innerHTML = `Muchas gracias ${ingreso_usuario.value} ya estas registrado.`
+        mensaje.style.color = "blue"
+        mensaje.style.fontSize ="20px"
+    }
+    else {
+        let mensaje= document.getElementById("mensaje");
+        mensaje.innerHTML = `Error al loguearse, por favor complete todos los campos`
+        mensaje.style.color = "red"
+        mensaje.style.fontSize ="20px"
+    }
+    console.log("nuevo usuario")
+    console.log("nombre: ",ingreso_usuario.value,"apellido:", ingreso_apellido_usuario.value, "email:", ingreso_email.value);
 }
-saludar (ingreso_usuario);
 
+let nuevo_usuario = new Usuario_newsletter (ingreso_usuario.value, ingreso_apellido_usuario.value, ingreso_email.value);
+console.log(nuevo_usuario);
+
+const arr_usuarios = [];
+arr_usuarios.push(nuevo_usuario)
+console.log(arr_usuarios)
 //ingreso producto y cuotas
+
 let ingreso_producto = prompt("ingrese uno de nuestros productos");
 let ingreso_cuota = prompt("ingrese la cantidad de cuotas:");
 
@@ -88,4 +103,3 @@ function cuotas (precio, cuota, nombre){
 console.log("el precio de", producto.nombre, "es:", producto.precio);
 descuento(producto.nombre, producto.precio)
 cuotas(producto.precio, ingreso_cuota, producto.nombre);
-
