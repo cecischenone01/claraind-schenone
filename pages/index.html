@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clara-indumentaria</title>
+</head>
+<body>
+    <div>
+        <h1>CLARA INDUMENTARIA</h1>
+    </div>
+    <div>
+        <nav>
+            <ul>
+                <li>Inicio</li>
+                <li>Productos</li>
+                <li>Nosotros</li>
+                <li>Contacto</li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div>
+        <p>SUSCRIBETE A NUESTRO NEWSLETTER PARA RECIBIR NOVEDADES</p>
+        <form action="" id="formulario">        
+            <label for="text">nombre</label>
+            <input type="text" id="nombre_usuario"> <br>
+    
+            
+            <label for="text">apellido</label>
+            <input type="text" id="apellido_usuario"><br>
+    
+            <label for="mail">email</label>
+            <input type="mail" id="email_usuario"><br>
+    
+            <button type="submit">Enviar</button>
+            <div id="mensaje"></div>
+        </form>
+    </div>
+    <div>
+        <h2>Nuestros productos</h2>
+            <div>
+                <img src="../assets/img/6951d3a58296c1e2886972c9f187478c.jpg" alt="jean">
+                <h4>Jean slouchy</h4>
+                <button onclick="agregar_al_carrito('jean')">Agregar al carrito</button>
+                <div>
+                    <h4>cantidad</h4>
+                    <select name="cantidad" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                        <option value="">5</option>
+                    </select>
+                </div>
+            </div> 
+            <div>
+                <img src="../assets/img/conjunto beige.jpg" alt="conjunto">
+                <h4>Conjunto tostado</h4>
+                <button onclick="agregar_al_carrito('conjunto')">Agregar al carrito</button>
+                <div>
+                    <h4>cantidad</h4>
+                    <select name="cantidad" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                        <option value="">5</option>
+                    </select>
+                </div>
+            </div> 
+            <div>
+                <img src="../assets/img/remera blanca.jpg" alt="remera blanca">
+                <h4>Remera blanca</h4>
+                <button onclick="agregar_al_carrito('remera')">Agregar al carrito</button>
+                <div>
+                    <h4>cantidad</h4>
+                    <select name="cantidad" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                        <option value="">5</option>
+                    </select>
+                </div>
+            </div> 
+            <div>
+                <img src="../assets/img/sweter blanco.webp" alt="Sweter blanco">
+                <h4>Sweter blanco</h4>
+                <button onclick="agregar_al_carrito('sweter')">Agregar al carrito</button>
+                <div>
+                    <h4>cantidad</h4>
+                    <select name="cantidad" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                        <option value="">5</option>
+                    </select>
+                </div>
+            </div>    
+    </div>
+
+    <div>
+        <h2>Seleccione en cuantas cuotas desea abonar</h2>
+        <select name="cuotas" id="">
+            <option value="">3 cuotas sin interes</option>
+            <option value="">6 cuotas sin interes</option>
+            <option value="">12 cuotas sin interes</option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Comprar</button>
+    </div>
+    <footer>
+        <ul>
+            <li>Inicio</li>
+            <li>Productos</li>
+            <li>Nosotros</li>
+            <li>Contacto</li>
+        </ul>
+    </footer>
+    <script src="miarchivo.js"></script>
+</body>
+</html>
