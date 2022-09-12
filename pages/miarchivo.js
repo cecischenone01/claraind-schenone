@@ -1,10 +1,3 @@
-class Producto {
-    constructor (nombre, color, precio){
-        this.nombre = nombre
-        this.color = color
-        this.precio = precio
-    } 
-}
 
 class Usuario_newsletter {
     constructor (nombre, apellido, email){
@@ -29,6 +22,11 @@ var user = []
             user.push(nuevo_usuario)
             console.log (nuevo_usuario)
             console.log(user);
+
+            let arreglo_json = JSON.stringify (user)
+            localStorage.setItem ("arr_usuarios", arreglo_json)
+            let recupero_arr = localStorage.getItem(user)
+            recupero_arr = JSON.parse (recupero_arr)
         }
         else{
             mensaje.innerHTML = "ERROR, POR FAVOR COMPLETÁ TODOS LOS CAMPOS"
@@ -37,22 +35,71 @@ var user = []
             console.log ("el nombre del usuario es:", ingreso_usuario.value)
             console.log ("el apellido del usuario es:", ingreso_apellido_usuario.value)
             console.log ("el email del usuario es:", ingreso_email.value)
-    })
-//funcion para agregar al carrito
-    arr_carrito=[];
-    arr_productos =[{nombre: 'jean', precio: 8000},{nombre: 'conjunto', precio: 10000},{nombre: 'remera', precio:3000},{nombre: 'sweter', precio: 6000}];
 
-    function agregar_al_carrito(param){
-        let estaEnElCarro = arr_carrito.find(producto => producto.nombre == param);
-        let producto = arr_productos.find(producto => producto.nombre == param);
-        if(!estaEnElCarro){
-            arr_carrito.push(producto);
-            console.log(arr_carrito)
-        }else{
-            alert('este producto ya fue agregado al carrito')
-            console.log(arr_carrito)
-        }
+    })
+
+//carrito
+let carrito = [];
+
+let btn_compra = document.querySelectorAll(".boton_compra")
+
+for (let boton of btn_compra){
+    boton.addEventListener ("click", agregar_al_carrito)
+}
+
+function agregar_al_carrito (e){
+    
+    let hijo = e.target
+    let padre = hijo.parentNode
+    let abuelo = padre.parentNode
+
+    let nombre_producto = padre.querySelector("h5").textContent
+    console.log(nombre_producto)
+
+    let precio_producto = padre.querySelector("span").textContent
+    console.log(precio_producto)
+
+    let img_producto = abuelo.querySelector("img").src
+    console.log (img_producto)
+
+    let producto = {
+        nombre: nombre_producto,
+        precio: precio_producto,
+        img: img_producto,
+        cantidad: 1
     }
+    carrito.push(producto)
+    console.log(carrito)
+
+    let arreglo_json = JSON.stringify (carrito)
+    localStorage.setItem ("carrito", arreglo_json)
+
+    producto_carrito(producto);
+}
+
+function producto_carrito (producto){
+    let fila = document.createElement ("tr")
+    fila.innerHTML =`<td><img class= "img_carrito"src="${producto.img}"></td>
+                    <td>${producto.nombre}</td>
+                    <td>${producto.cantidad}</td>
+                    <td>${producto.precio}</td>
+                    <td><button class="btn-danger borrar_elemento">Borrar</button></td>`
+    
+    let tabla = document.getElementById("tbody")
+    tabla.append(fila)
+
+    let botones_borrar = document.querySelectorAll(".borrar_elemento")
+
+    for (let boton of botones_borrar){
+    boton.addEventListener ("click", borrar_del_carrito)
+    }
+}
+
+function borrar_del_carrito(e){
+
+    let abuelo = e.target.parentNode.parentNode
+    abuelo.remove()
+}
 
 /*
 function precio_con_descuento(producto){
