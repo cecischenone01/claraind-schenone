@@ -1,105 +1,131 @@
+//productos
+const lista_productos = [
+  { nombre: "jean", precio: "6000", imagen: '../assets/img/jean.jpg'},
+  { nombre: "remera", precio: "3000", imagen: '../assets/img/remera blanca.jpg'},
+  { nombre: "campera", precio: "15000", imagen: '../assets/img/campera.jfif' },
+  { nombre: "sweter", precio: "4000", imagen: '../assets/img/sweter.jfif' },
+  { nombre: "short", precio: "5000", imagen: '../assets/img/short.jpg' },
+  { nombre: "jardinero", precio: "10000", imagen: '../assets/img/jardinero2.jpg' },
+];
 
-class Usuario_newsletter {
-    constructor (nombre, apellido, email){
-        this.nombre = nombre
-        this.apellido = apellido
-        this.email = email
-    }
+function mostrarProducto(producto) {
+  console.log(producto);
+  let grid = document.getElementById("products");
+  let div = document.createElement("div");
+  div.innerHTML = ` <div class="card style_card" style="width: 18rem;" id="${producto.nombre + 1}">
+                    <img src="${producto.imagen}" class="card-img-top img_card" alt="jean">
+                    <div class="card-body">
+                        <h5 class="card-title">${producto.nombre}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <span class="precio">${producto.precio}</span> <br>
+                        <input min="1" name="cantidad" type="number" id="${producto.nombre + 2}">Cantidad</input>
+                    <a href="#" class="btn btn-primary boton_compra" onclick="agregar_al_carrito('${producto.nombre}', ${producto.precio})">Agregar al carrito</a>
+                    </div>
+                    </div>`;
+  grid.append(div);
 }
-//newsletter
-let form = document.getElementById ("formulario");
-var user = []
-    form.addEventListener ("submit", function(e){
-        e.preventDefault ();
-        let ingreso_usuario = document.getElementById ("nombre_usuario");
-        let ingreso_apellido_usuario = document.getElementById ("apellido_usuario")
-        let ingreso_email = document.getElementById ("email_usuario")
-        let mensaje= document.getElementById ("mensaje")
-        if ((ingreso_usuario.value !== "") && (ingreso_apellido_usuario.value !== "") && (ingreso_email.value !== "")){
-            mensaje.innerHTML = "BIENVENIDO A NUESTRA COMUNIDAD, YA ESTAS REGISTRADO!"
-            mensaje.style.color = "blue"
-            let nuevo_usuario = new Usuario_newsletter (ingreso_usuario.value, ingreso_apellido_usuario.value, ingreso_email.value)
-            user.push(nuevo_usuario)
-            console.log (nuevo_usuario)
-            console.log(user);
+document.addEventListener("DOMContentLoaded", function () {
+  lista_productos.map((producto) => mostrarProducto(producto));
+});
 
-            let arreglo_json = JSON.stringify (user)
-            localStorage.setItem ("arr_usuarios", arreglo_json)
-            let recupero_arr = localStorage.getItem(user)
-            recupero_arr = JSON.parse (recupero_arr)
-        }
-        else{
-            mensaje.innerHTML = "ERROR, POR FAVOR COMPLETÁ TODOS LOS CAMPOS"
-            mensaje.style.color ="red"
-        }
-            console.log ("el nombre del usuario es:", ingreso_usuario.value)
-            console.log ("el apellido del usuario es:", ingreso_apellido_usuario.value)
-            console.log ("el email del usuario es:", ingreso_email.value)
-
-    })
-
-//carrito
 let carrito = [];
 
-let btn_compra = document.querySelectorAll(".boton_compra")
+function agregar_al_carrito(nombre, precio) {
+  estaEnElCarrito = carrito.find(producto => producto.nombre === nombre)
+  let cantidad = document.getElementById(nombre + 2).value;
+  let producto = {nombre: nombre, precio: precio, cantidad: cantidad}
+  if(estaEnElCarrito){
+    let productoRepetido = carrito.find(producto => producto.nombre === nombre);
+    let index = carrito.indexOf(productoRepetido);
+    carrito.splice(index);
+    carrito.push(producto);
+  }else{
+    carrito.push(producto);
+  }
+  
+  console.log(carrito);
 
-for (let boton of btn_compra){
-    boton.addEventListener ("click", agregar_al_carrito)
+  let arreglo_json = JSON.stringify(carrito);
+  localStorage.setItem("carrito", arreglo_json);
+  mostrarCarritoLateral()
 }
 
-function agregar_al_carrito (e){
-    
-    let hijo = e.target
-    let padre = hijo.parentNode
-    let abuelo = padre.parentNode
+function mostrarCarritoLateral() {
+  let fila = document.createElement("tr");
+  let tabla = document.getElementById("tbody");
+  carrito.map(producto => {
+    fila.innerHTML = `<td><img class= "img_carrito"src="${producto.img}"></td>
+    <td>${producto.nombre}</td>
+    <td>${producto.cantidad ? producto.cantidad : 'Cantidad invalida'}</td>
+    <td>${producto.precio}</td>
+    <td><button class="btn-danger borrar_elemento">Borrar</button></td>`;
+  })
+  tabla.append(fila);
 
-    let nombre_producto = padre.querySelector("h5").textContent
-    console.log(nombre_producto)
+  let botones_borrar = document.querySelectorAll(".borrar_elemento");
 
-    let precio_producto = padre.querySelector("span").textContent
-    console.log(precio_producto)
+  for (let boton of botones_borrar) {
+    boton.addEventListener("click", borrar_del_carrito);
+  }
+}
+//newsletter
 
-    let img_producto = abuelo.querySelector("img").src
-    console.log (img_producto)
-
-    let producto = {
-        nombre: nombre_producto,
-        precio: precio_producto,
-        img: img_producto,
-        cantidad: 1
-    }
-
-    carrito.push(producto)
-    console.log(carrito)
-
-    let arreglo_json = JSON.stringify (carrito)
-    localStorage.setItem ("carrito", arreglo_json)
-
-    producto_carrito(producto);
+class Usuario_newsletter {
+  constructor(nombre, apellido, email) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.email = email;
+  }
 }
 
-function producto_carrito (producto){
-    let fila = document.createElement ("tr")
-    fila.innerHTML =`<td><img class= "img_carrito"src="${producto.img}"></td>
-                    <td>${producto.nombre}</td>
-                    <td><select><option>1</option><option>2</option><option>3</option></select></td>
-                    <td>${producto.precio}</td>
-                    <td><button class="btn-danger borrar_elemento">Borrar</button></td>`
-    
-    let tabla = document.getElementById("tbody")
-    tabla.append(fila)
+let form = document.getElementById("formulario");
+var user = [];
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  let ingreso_usuario = document.getElementById("nombre_usuario");
+  let ingreso_apellido_usuario = document.getElementById("apellido_usuario");
+  let ingreso_email = document.getElementById("email_usuario");
+  let mensaje = document.getElementById("mensaje");
+  if (
+    ingreso_usuario.value !== "" &&
+    ingreso_apellido_usuario.value !== "" &&
+    ingreso_email.value !== ""
+  ) {
+    mensaje.innerHTML = "BIENVENIDO A NUESTRA COMUNIDAD, YA ESTAS REGISTRADO!";
+    mensaje.style.color = "blue";
+    let nuevo_usuario = new Usuario_newsletter(
+      ingreso_usuario.value,
+      ingreso_apellido_usuario.value,
+      ingreso_email.value
+    );
+    user.push(nuevo_usuario);
+    console.log(nuevo_usuario);
+    console.log(user);
 
-    let botones_borrar = document.querySelectorAll(".borrar_elemento")
+    let arreglo_json = JSON.stringify(user);
+    localStorage.setItem("arr_usuarios", arreglo_json);
+    let recupero_arr = localStorage.getItem(user);
+    recupero_arr = JSON.parse(recupero_arr);
+  } else {
+    mensaje.innerHTML = "ERROR, POR FAVOR COMPLETÁ TODOS LOS CAMPOS";
+    mensaje.style.color = "red";
+  }
+  console.log("el nombre del usuario es:", ingreso_usuario.value);
+  console.log("el apellido del usuario es:", ingreso_apellido_usuario.value);
+  console.log("el email del usuario es:", ingreso_email.value);
+});
 
-    for (let boton of botones_borrar){
-    boton.addEventListener ("click", borrar_del_carrito)
-    }
+//carrito
+
+let btn_compra = document.querySelectorAll(".boton_compra");
+
+for (let boton of btn_compra) {
+  boton.addEventListener("click", agregar_al_carrito);
 }
 
-function borrar_del_carrito(e){
-
-    let abuelo = e.target.parentNode.parentNode
-    abuelo.remove()
+function borrar_del_carrito(e) {
+  let abuelo = e.target.parentNode.parentNode;
+  abuelo.remove();
 }
 
 /*
@@ -149,4 +175,3 @@ function cuotas (precio, cuota, nombre){
 console.log("el precio de", producto.nombre, "es:", producto.precio);
 descuento(producto.nombre, producto.precio)
 cuotas(producto.precio, ingreso_cuota, producto.nombre);*/
-
