@@ -68,6 +68,7 @@ function agregar_al_carrito (e){
         img: img_producto,
         cantidad: 1
     }
+
     carrito.push(producto)
     console.log(carrito)
 
@@ -81,7 +82,7 @@ function producto_carrito (producto){
     let fila = document.createElement ("tr")
     fila.innerHTML =`<td><img class= "img_carrito"src="${producto.img}"></td>
                     <td>${producto.nombre}</td>
-                    <td>${producto.cantidad}</td>
+                    <td><select><option>1</option><option>2</option><option>3</option></select></td>
                     <td>${producto.precio}</td>
                     <td><button class="btn-danger borrar_elemento">Borrar</button></td>`
     
