@@ -16,8 +16,7 @@ function mostrarProducto(producto) {
                     <img src="${producto.imagen}" class="card-img-top img_card" alt="jean">
                     <div class="card-body">
                         <h5 class="card-title">${producto.nombre}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <span class="precio">${producto.precio}</span> <br>
+                        <span class="precio">$${producto.precio}</span> <br>
                         <input min="1" name="cantidad" type="number" id="${producto.nombre + 2}">Cantidad</input>
                     <a href="#" class="btn btn-primary boton_compra" onclick="agregar_al_carrito('${producto.nombre}', ${producto.precio})">Agregar al carrito</a>
                     </div>
@@ -54,7 +53,7 @@ function mostrarCarritoLateral() {
   let fila = document.createElement("tr");
   let tabla = document.getElementById("tbody");
   carrito.map(producto => {
-    fila.innerHTML = `<td><img class= "img_carrito"src="${producto.img}"></td>
+    fila.innerHTML = `<td><img class= "img_carrito"src="${producto.imagen}"></td>
     <td>${producto.nombre}</td>
     <td>${producto.cantidad ? producto.cantidad : 'Cantidad invalida'}</td>
     <td>${producto.precio}</td>
@@ -85,14 +84,24 @@ form.addEventListener("submit", function (e) {
   let ingreso_usuario = document.getElementById("nombre_usuario");
   let ingreso_apellido_usuario = document.getElementById("apellido_usuario");
   let ingreso_email = document.getElementById("email_usuario");
-  let mensaje = document.getElementById("mensaje");
   if (
     ingreso_usuario.value !== "" &&
     ingreso_apellido_usuario.value !== "" &&
     ingreso_email.value !== ""
   ) {
-    mensaje.innerHTML = "BIENVENIDO A NUESTRA COMUNIDAD, YA ESTAS REGISTRADO!";
-    mensaje.style.color = "blue";
+    Swal.fire({
+      icon: "success",
+      text: "Bienvenido/a a nuestra comunidad, ya estas registrado.",
+      width: '50rem',
+      background: "#ffffff",
+      confirmButtonColor: "#9b9b9b",
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
     let nuevo_usuario = new Usuario_newsletter(
       ingreso_usuario.value,
       ingreso_apellido_usuario.value,
@@ -107,8 +116,19 @@ form.addEventListener("submit", function (e) {
     let recupero_arr = localStorage.getItem(user);
     recupero_arr = JSON.parse(recupero_arr);
   } else {
-    mensaje.innerHTML = "ERROR, POR FAVOR COMPLETÁ TODOS LOS CAMPOS";
-    mensaje.style.color = "red";
+    Swal.fire({
+      icon: "error",
+      text: "Error al loguearse, por favor completa todos los campos.",
+      width: '50rem',
+      background: "#ffffff",
+      confirmButtonColor: "#9b9b9b",
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
   }
   console.log("el nombre del usuario es:", ingreso_usuario.value);
   console.log("el apellido del usuario es:", ingreso_apellido_usuario.value);

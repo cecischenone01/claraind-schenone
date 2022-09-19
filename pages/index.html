@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>Clara-indumentaria</title>
 </head>
 <body>
@@ -77,92 +79,35 @@
         </div>
     </div>
     <div class="contenedor_padre">
-        <div class="grid_productos" id="products">
-            <!-- <div class="card style_card" style="width: 18rem;" id="jean">
-                <img src="../assets/img/jean.jpg" class="card-img-top img_card" alt="jean">
-                <div class="card-body">
-                    <h5 class="card-title">JEAN</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <span class="precio">$6000</span> <br>
-                    <a href="#" class="btn btn-primary boton_compra">Agregar al carrito</a>
-                </div>
-            </div>
-
-            <div class="card style_card" style="width: 18rem;" id="remera">
-                <img src="../assets/img/remera blanca.jpg" class="card-img-top img_card" alt="remera">
-                <div class="card-body">
-                    <h5 class="card-title">REMERA</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <span class="precio">$3000</span> <br>
-                    <a href="#" class="btn btn-primary boton_compra">Agregar al carrito</a>
-                </div>
-            </div>
-
-            <div class="card style_card" style="width: 18rem;" id="campera">
-                <img src="../assets/img/campera.jfif" class="card-img-top img_card" alt="campera">
-                <div class="card-body">
-                    <h5 class="card-title">CAMPERA</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <span class="precio">$15000</span> <br>
-                    <a href="#" class="btn btn-primary boton_compra">Agregar al carrito</a>
-                </div>
-            </div>
-
-            <div class="card style_card" style="width: 18rem;" id="sweter">
-                <img src="../assets/img/sweter.jfif" class="card-img-top img_card" alt="sweter">
-                <div class="card-body">
-                    <h5 class="card-title">SWETER</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <span class="precio">$4000</span> <br>
-                    <a href="#" class="btn btn-primary boton_compra">Agregar al carrito</a>
-                </div>
-            </div>
-
-            <div class="card style_card" style="width: 18rem;" id="short">
-                <img src="../assets/img/short.jpg" class="card-img-top img_card" alt="short">
-                <div class="card-body">
-                    <h5 class="card-title">SHORT</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <span class="precio">$5000</span> <br>
-                    <a href="#" class="btn btn-primary boton_compra">Agregar al carrito</a>
-                </div>
-            </div>
-
-            <div class="card style_card" style="width: 18rem;" id="jardinero">
-                <img src="../assets/img/jardinero2.jpg" class="card-img-top img_card" alt="jardinero">
-                <div class="card-body">
-                    <h5 class="card-title">JARDINERO</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <span class="precio">$10000</span> <br>
-                    <a href="#" class="btn btn-primary boton_compra">Agregar al carrito</a>
-                </div>
-            </div> -->
-        </div>
-</div> 
+        <div class="grid_productos" id="products"></div>
+    </div> 
 </main>   
 <footer>
     <div class="newsletter">
         <p>SUSCRIBETE A NUESTRO NEWSLETTER PARA RECIBIR NOVEDADES</p>
-            <div>
+            <div class="form_container">
                 <form class="form_news" action="" id="formulario">        
-                    <label for="text">nombre</label>
+                    <label for="text">Nombre</label>
                     <input type="text" id="nombre_usuario"> <br>
             
-                    <label for="text">apellido</label>
+                    <label for="text">Apellido</label>
                     <input type="text" id="apellido_usuario"><br>
             
-                    <label for="mail">email</label>
+                    <label for="mail">Email</label>
                     <input type="mail" id="email_usuario"><br>
-            
-                    <button type="submit">Enviar</button>
-                    <div id="mensaje"></div>
+
+                    <button class="boton_enviar" type="submit">Enviar</button>
                 </form>
             </div>
-        </div>
+    </div>
+    <div class="copy">
+      <p>Copyright © 2022 claraindumentaria. Todos los derechos reservados</p>
+    </div>
 </footer>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="miarchivo.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
 </body>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
