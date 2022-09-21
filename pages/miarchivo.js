@@ -1,24 +1,24 @@
 //productos
 const lista_productos = [
-  { nombre: "jean", precio: "6000", imagen: '../assets/img/jean.jpg'},
-  { nombre: "remera", precio: "3000", imagen: '../assets/img/remera blanca.jpg'},
-  { nombre: "campera", precio: "15000", imagen: '../assets/img/campera.jfif' },
-  { nombre: "sweter", precio: "4000", imagen: '../assets/img/sweter.jfif' },
-  { nombre: "short", precio: "5000", imagen: '../assets/img/short.jpg' },
-  { nombre: "jardinero", precio: "10000", imagen: '../assets/img/jardinero2.jpg' },
+  { nombre: "Jean", precio: "6000", imagen: '../assets/img/jean.jpg'},
+  { nombre: "Remera", precio: "3000", imagen: '../assets/img/remera blanca.jpg'},
+  { nombre: "Campera", precio: "15000", imagen: '../assets/img/campera.jfif' },
+  { nombre: "Sweter", precio: "4000", imagen: '../assets/img/sweter.jfif' },
+  { nombre: "Short", precio: "5000", imagen: '../assets/img/short.jpg' },
+  { nombre: "Jardinero", precio: "10000", imagen: '../assets/img/jardinero2.jpg' },
 ];
-
+//CARDS DE PRODUCTOS CREADA DESDE JS
 function mostrarProducto(producto) {
   console.log(producto);
   let grid = document.getElementById("products");
   let div = document.createElement("div");
   div.innerHTML = ` <div class="card style_card" style="width: 18rem;" id="${producto.nombre + 1}">
-                    <img src="${producto.imagen}" class="card-img-top img_card" alt="jean">
+                    <img src="${producto.imagen}" class="card-img-top img_card" alt="">
                     <div class="card-body">
-                        <h5 class="card-title">${producto.nombre}</h5>
+                        <h5 class="card-title titulo_card">${producto.nombre}</h5>
                         <span class="precio">$${producto.precio}</span> <br>
                         <input min="1" name="cantidad" type="number" id="${producto.nombre + 2}">Cantidad</input>
-                    <a href="#" class="btn btn-primary boton_compra" onclick="agregar_al_carrito('${producto.nombre}', ${producto.precio})">Agregar al carrito</a>
+                    <a href="#" class="btn btn-dark boton_agregar" onclick="agregar_al_carrito('${producto.nombre}', ${producto.precio})">Agregar al carrito</a>
                     </div>
                     </div>`;
   grid.append(div);
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
   lista_productos.map((producto) => mostrarProducto(producto));
 });
 
+//CARRITO
 let carrito = [];
 
 function agregar_al_carrito(nombre, precio) {
@@ -49,23 +50,53 @@ function agregar_al_carrito(nombre, precio) {
   mostrarCarritoLateral()
 }
 
+function borrar_del_carrito(e) {
+  let abuelo = e.target.parentNode.parentNode;
+  abuelo.remove();
+}
+//CARRITO LATERAL DESDE JS
 function mostrarCarritoLateral() {
-  let fila = document.createElement("tr");
   let tabla = document.getElementById("tbody");
+  let fila = document.createElement("tr");
+
   carrito.map(producto => {
-    fila.innerHTML = `<td><img class= "img_carrito"src="${producto.imagen}"></td>
+    fila.innerHTML = `<td><img class="img_carrito" src="${producto.imagen}" ></td>
     <td>${producto.nombre}</td>
     <td>${producto.cantidad ? producto.cantidad : 'Cantidad invalida'}</td>
     <td>${producto.precio}</td>
-    <td><button class="btn-danger borrar_elemento">Borrar</button></td>`;
+    <td><button class="btn-danger borrar_elemento">Borrar</button></td>`
   })
+  
   tabla.append(fila);
 
-  let botones_borrar = document.querySelectorAll(".borrar_elemento");
+    //BOTON BORRAR
+    let botones_borrar = document.querySelectorAll(".borrar_elemento");
+  
+    for (let boton of botones_borrar) {
+      boton.addEventListener("click", borrar_del_carrito);
+    }
+    finalizar_compra()
+}
 
-  for (let boton of botones_borrar) {
-    boton.addEventListener("click", borrar_del_carrito);
-  }
+function finalizar_compra(){
+  //BOTON COMPRAR
+    let cuerpo_carro = document.getElementById("cuerpo_carrito")
+    let div_boton = document.querySelectorAll(".boton_comprar")
+    let btn_compra = document.createElement ("div")
+  
+    btn_compra.innerHTML = `<button class="btn-danger boton_comprar">Comprar</button>`
+    
+    cuerpo_carro.append(btn_compra);
+
+    for (let boton of div_boton) {
+      boton.addEventListener("click", fin_compra);
+    }
+  
+  
+}
+function fin_compra(e){
+  let tataraabuelo = e.target.parentNode.parentNode.parentNode;
+  tataraabuelo.remove();
 }
 //newsletter
 
@@ -135,18 +166,6 @@ form.addEventListener("submit", function (e) {
   console.log("el email del usuario es:", ingreso_email.value);
 });
 
-//carrito
-
-let btn_compra = document.querySelectorAll(".boton_compra");
-
-for (let boton of btn_compra) {
-  boton.addEventListener("click", agregar_al_carrito);
-}
-
-function borrar_del_carrito(e) {
-  let abuelo = e.target.parentNode.parentNode;
-  abuelo.remove();
-}
 
 /*
 function precio_con_descuento(producto){
