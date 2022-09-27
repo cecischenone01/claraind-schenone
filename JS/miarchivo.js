@@ -1,24 +1,22 @@
-//productos
-const lista_productos = [
-  { nombre: "Jean", precio: "6000", imagen: '../assets/img/jean.jpg'},
-  { nombre: "Remera", precio: "3000", imagen: '../assets/img/remera blanca.jpg'},
-  { nombre: "Campera", precio: "15000", imagen: '../assets/img/campera.jfif' },
-  { nombre: "Sweter", precio: "4000", imagen: '../assets/img/sweter.jfif' },
-  { nombre: "Short", precio: "5000", imagen: '../assets/img/short.jpg' },
-  { nombre: "Jardinero", precio: "10000", imagen: '../assets/img/jardinero2.jpg' },
-];
 //CARDS DE PRODUCTOS CREADA DESDE JS
+let lista_productos=[];
+lista_productos.forEach(mostrarProducto)
+
+  fetch("../JS/productos.json")
+  .then(response => response.json())
+  .then(data=> mostrarProducto(data))
+
 function mostrarProducto(producto) {
   console.log(producto);
+  lista_productos.push(producto)
   let grid = document.getElementById("products");
   let div = document.createElement("div");
-  div.innerHTML = ` <div class="card style_card" style="width: 18rem;" id="${producto.nombre + 1}">
+  div.innerHTML = ` <div class="card style_card" style="width: 18rem;" id="${producto.nombre}">
                     <img src="${producto.imagen}" class="card-img-top img_card" alt="">
                     <div class="card-body">
                         <h5 class="card-title titulo_card">${producto.nombre}</h5>
                         <span class="precio">$${producto.precio}</span> <br>
-                        <input min="1" name="cantidad" type="number" id="${producto.nombre + 2}">Cantidad</input>
-                    <a href="#" class="btn btn-dark boton_agregar" onclick="agregar_al_carrito('${producto.nombre}', ${producto.precio})">Agregar al carrito</a>
+                    <a href="#" class="btn btn-dark boton_agregar" onclick="agregar_al_carrito('${producto.nombre}', ${producto.precio}, ${producto.cantidad},'${producto.imagen}')">Agregar al carrito</a>
                     </div>
                     </div>`;
   grid.append(div);
@@ -30,19 +28,29 @@ document.addEventListener("DOMContentLoaded", function () {
 //CARRITO
 let carrito = [];
 
-function agregar_al_carrito(nombre, precio) {
+function agregar_al_carrito(nombre, precio, cantidad, imagen) {
   estaEnElCarrito = carrito.find(producto => producto.nombre === nombre)
-  let cantidad = document.getElementById(nombre + 2).value;
-  let producto = {nombre: nombre, precio: precio, cantidad: cantidad}
+  let producto = {nombre: nombre, precio: precio, cantidad: cantidad, imagen: imagen}
   if(estaEnElCarrito){
     let productoRepetido = carrito.find(producto => producto.nombre === nombre);
     let index = carrito.indexOf(productoRepetido);
+    let suma_cantidad = document.querySelectorAll(".boton_agregar");
+    for (let click of suma_cantidad ){
+      click.addEventListener("click", sumar_cantidad);
+    }
+    function sumar_cantidad(){
+      
+      for( let i= 0; i<= producto.cantidad; i++){
+        let suma = producto.cantidad + 1
+        lista_productos.push(suma)
+      }
+    }
     carrito.splice(index);
     carrito.push(producto);
   }else{
     carrito.push(producto);
   }
-  
+
   console.log(carrito);
 
   let arreglo_json = JSON.stringify(carrito);
@@ -62,7 +70,7 @@ function mostrarCarritoLateral() {
   carrito.map(producto => {
     fila.innerHTML = `<td><img class="img_carrito" src="${producto.imagen}" ></td>
     <td>${producto.nombre}</td>
-    <td>${producto.cantidad ? producto.cantidad : 'Cantidad invalida'}</td>
+    <td>${producto.cantidad}</td>
     <td>${producto.precio}</td>
     <td><button class="btn-danger borrar_elemento">Borrar</button></td>`
   })

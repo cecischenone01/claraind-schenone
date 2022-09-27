@@ -1,0 +1,38 @@
+[
+    { 
+        "nombre": "Jean",
+        "precio": "6000",
+        "imagen": "../assets/img/jean.jpg",
+        "cantidad": 1
+    },
+    { 
+        "nombre": "Remera",
+        "precio": "3000",
+        "imagen": "../assets/img/remera blanca.jpg",
+        "cantidad": 1
+    },
+    { 
+        "nombre": "Campera",
+        "precio": "15000", 
+        "imagen": "../assets/img/campera.jfif", 
+        "cantidad": 1 
+    },
+    { 
+        "nombre": "Sweter", 
+        "precio": "4000", 
+        "imagen": "../assets/img/sweter.jfif", 
+        "cantidad": 1 
+    },
+    { 
+        "nombre": "Short", 
+        "precio": "5000", 
+        "imagen": "../assets/img/short.jpg", 
+        "cantidad": 1 
+    },
+    { 
+        "nombre": "Jardinero", 
+        "precio": "10000", 
+        "imagen": "../assets/img/jardinero2.jpg", 
+        "cantidad": 1 
+    }
+]
