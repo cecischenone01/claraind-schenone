@@ -1,28 +1,29 @@
 //CARDS DE PRODUCTOS CREADA DESDE JS
 let lista_productos=[];
-lista_productos.forEach(mostrarProducto)
 
   fetch("../JS/productos.json")
   .then(response => response.json())
-  .then(data=> mostrarProducto(data))
+  .then(data=> card_producto(data))
 
-function mostrarProducto(producto) {
-  console.log(producto);
+function card_producto(producto) {
   lista_productos.push(producto)
   let grid = document.getElementById("products");
   let div = document.createElement("div");
-  div.innerHTML = ` <div class="card style_card" style="width: 18rem;" id="${producto.nombre}">
-                    <img src="${producto.imagen}" class="card-img-top img_card" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title titulo_card">${producto.nombre}</h5>
-                        <span class="precio">$${producto.precio}</span> <br>
-                    <a href="#" class="btn btn-dark boton_agregar" onclick="agregar_al_carrito('${producto.nombre}', ${producto.precio}, ${producto.cantidad},'${producto.imagen}')">Agregar al carrito</a>
-                    </div>
-                    </div>`;
+  div.classList.add("grid_productos")
+  producto.forEach(element => {
+    div.innerHTML += `<div class="card style_card" style="width: 18rem;" id="${element.nombre}">
+                      <img src="${element.imagen}" class="card-img-top img_card" alt="">
+                      <div class="card-body">
+                      <h5 class="card-title titulo_card">${element.nombre}</h5>
+                      <span class="precio">$${element.precio}</span> <br>
+                      <a href="#" class="btn btn-dark boton_agregar boton_comprar" onclick="agregar_al_carrito('${element.nombre}', ${element.precio}, ${element.cantidad},'${element.imagen}')">Agregar al carrito</a>
+                      </div>
+                      </div>`;
+  });
   grid.append(div);
 }
 document.addEventListener("DOMContentLoaded", function () {
-  lista_productos.map((producto) => mostrarProducto(producto));
+  lista_productos.map((producto) => card_producto(producto));
 });
 
 //CARRITO
@@ -39,15 +40,12 @@ function agregar_al_carrito(nombre, precio, cantidad, imagen) {
       click.addEventListener("click", sumar_cantidad);
     }
     function sumar_cantidad(){
-      
-      for( let i= 0; i<= producto.cantidad; i++){
-        let suma = producto.cantidad + 1
-        lista_productos.push(suma)
-      }
+      console.log("hola")
     }
     carrito.splice(index);
     carrito.push(producto);
-  }else{
+  }
+  else{
     carrito.push(producto);
   }
 
@@ -58,11 +56,12 @@ function agregar_al_carrito(nombre, precio, cantidad, imagen) {
   mostrarCarritoLateral()
 }
 
+//CARRITO LATERAL DESDE JS
 function borrar_del_carrito(e) {
   let abuelo = e.target.parentNode.parentNode;
   abuelo.remove();
 }
-//CARRITO LATERAL DESDE JS
+
 function mostrarCarritoLateral() {
   let tabla = document.getElementById("tbody");
   let fila = document.createElement("tr");
@@ -74,38 +73,37 @@ function mostrarCarritoLateral() {
     <td>${producto.precio}</td>
     <td><button class="btn-danger borrar_elemento">Borrar</button></td>`
   })
-  
   tabla.append(fila);
 
-    //BOTON BORRAR
-    let botones_borrar = document.querySelectorAll(".borrar_elemento");
+//BOTON BORRAR
+  let botones_borrar = document.querySelectorAll(".borrar_elemento");
   
-    for (let boton of botones_borrar) {
-      boton.addEventListener("click", borrar_del_carrito);
-    }
-    finalizar_compra()
+  for (let boton of botones_borrar) {
+    boton.addEventListener("click", borrar_del_carrito);
+  }
 }
+//FIN COMPRA
+let seccion_btn_compra = document.getElementById ("cuerpo_carrito")
+let btn_fin_compra = document.createElement ("div")
+btn_fin_compra.innerHTML = `<button onclick= "finalizar_compra()" class="btn-danger boton_comprar">Comprar</button>`
+
+seccion_btn_compra.append(btn_fin_compra)
 
 function finalizar_compra(){
   //BOTON COMPRAR
-    let cuerpo_carro = document.getElementById("cuerpo_carrito")
     let div_boton = document.querySelectorAll(".boton_comprar")
-    let btn_compra = document.createElement ("div")
   
-    btn_compra.innerHTML = `<button class="btn-danger boton_comprar">Comprar</button>`
-    
-    cuerpo_carro.append(btn_compra);
-
     for (let boton of div_boton) {
       boton.addEventListener("click", fin_compra);
     }
-  
-  
 }
+
 function fin_compra(e){
-  let tataraabuelo = e.target.parentNode.parentNode.parentNode;
+  let tataraabuelo = e.target.parentNode.parentNode;
   tataraabuelo.remove();
 }
+
+
 //newsletter
 
 class Usuario_newsletter {
