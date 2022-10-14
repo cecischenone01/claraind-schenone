@@ -3,109 +3,100 @@ let lista_productos=[];
 
   fetch("../JS/productos.json")
   .then(response => response.json())
-  .then(data=> card_producto(data))
+  .then(data=> {
+    data.forEach (data =>{
+      lista_productos.push(data)
+    })
+  })
 
-function card_producto(producto) {
-  lista_productos.push(producto)
-  let grid = document.getElementById("products");
-  let div = document.createElement("div");
-  div.classList.add("grid_productos")
-  producto.forEach(element => {
-    div.innerHTML += `<div class="card style_card" style="width: 18rem;" id="${element.nombre}">
-                      <img src="${element.imagen}" class="card-img-top img_card" alt="">
-                      <div class="card-body">
-                      <h5 class="card-title titulo_card">${element.nombre}</h5>
-                      <span class="precio">$${element.precio}</span> <br>
-                      <a href="#" class="btn btn-dark boton_agregar boton_comprar" onclick="agregar_al_carrito('${element.nombre}', ${element.precio}, ${element.cantidad},'${element.imagen}')">Agregar al carrito</a>
-                      </div>
-                      </div>`;
-  });
-  grid.append(div);
-}
-document.addEventListener("DOMContentLoaded", function () {
-  lista_productos.map((producto) => card_producto(producto));
-});
+console.log(lista_productos)
 
-//CARRITO
+let contenedor_productos = document.getElementById("products");
+
+let contenedor_carrito = document.getElementById("tbody");
+
+let boton_vaciar = document.getElementById("vaciar_carrito")
+
 let carrito = [];
 
-function agregar_al_carrito(nombre, precio, cantidad, imagen) {
-  estaEnElCarrito = carrito.find(producto => producto.nombre === nombre)
-  let producto = {nombre: nombre, precio: precio, cantidad: cantidad, imagen: imagen}
-  if(estaEnElCarrito){
-    let productoRepetido = carrito.find(producto => producto.nombre === nombre);
-    let index = carrito.indexOf(productoRepetido);
-    let suma_cantidad = document.querySelectorAll(".boton_agregar");
-    for (let click of suma_cantidad ){
-      click.addEventListener("click", sumar_cantidad);
-    }
-    function sumar_cantidad(){
-      console.log("hola")
-    }
-    carrito.splice(index);
-    carrito.push(producto);
+document.addEventListener('DOMContentLoaded', () =>{
+  if (localStorage.getItem('carrito')){
+    carrito = JSON.parse(localStorage.getItem('carrito'))
+    actualizar_carrito()
   }
-  else{
-    carrito.push(producto);
-  }
+})
 
-  console.log(carrito);
+boton_vaciar.addEventListener('click', () => {
+    carrito.length = 0
+    actualizar_carrito
+})
 
-  let arreglo_json = JSON.stringify(carrito);
-  localStorage.setItem("carrito", arreglo_json);
-  mostrarCarritoLateral()
+lista_productos.forEach((producto) => {
+    let div = document.createElement("div");
+    div.innerHTML = `<div class="card style_card" style="width: 18rem;" id="${producto.id}">
+                      <img src="${producto.imagen}" class="card-img-top img_card" alt="">
+                      <div class="card-body">
+                      <h5 class="card-title titulo_card">${producto.nombre}</h5>
+                      <span class="precio">$${producto.precio}</span> <br>
+                      <a href="#" id="boton_agregar${producto.id}"class="btn btn-dark boton_comprar" >Agregar al carrito</a>
+                      </div>
+                      </div>`;
+
+    contenedor_productos.append(div)
+
+    let button = document.getElementById(`boton_agregar${producto.id}`)
+    button.addEventListener ('click', ()=>{
+    agregar_al_carrito(producto.id)
+    })
+    
+});
+
+//AGREGAR AL CARRITO
+let agregar_al_carrito = (productoId) => {
+
+let existe = carrito.some(producto => producto.id === productoId)
+
+if (existe){
+  let prod = carrito.map(producto => {
+    if(producto.id === productoId){
+      producto.cantidad++
+    }
+  })
+} 
+else{
+  let item = lista_productos.find((producto) => producto.id === productoId)
+  carrito.push(item)
+  console.log (carrito)
 }
 
-//CARRITO LATERAL DESDE JS
-function borrar_del_carrito(e) {
-  let abuelo = e.target.parentNode.parentNode;
-  abuelo.remove();
+actualizar_carrito()
+
 }
 
-function mostrarCarritoLateral() {
-  let tabla = document.getElementById("tbody");
-  let fila = document.createElement("tr");
+let eliminar_del_carrito = (productoId) =>{
+  let item = carrito.find((producto) => producto.id === productoId)
+  let indice = carrito.indexOf(item)
+  carrito.splice(indice, 1)
+  actualizar_carrito()
+}
 
-  carrito.map(producto => {
-    fila.innerHTML = `<td><img class="img_carrito" src="${producto.imagen}" ></td>
+let actualizar_carrito = () => {
+  contenedor_carrito.innerHTML = ""
+  carrito.forEach((producto) => {
+    let div = document.createElement("tr")
+    div.innerHTML = `<td><img class="img_carrito" src="${producto.imagen}" ></td>
     <td>${producto.nombre}</td>
     <td>${producto.cantidad}</td>
     <td>${producto.precio}</td>
-    <td><button class="btn-danger borrar_elemento">Borrar</button></td>`
+    <td><button onclick="eliminar_del_carrito(${producto.id})" class="btn-danger">Eliminar</button></td>`
+
+    contenedor_carrito.appendChild(div)
+
+    localStorage.setItem('carrito', JSON.stringify(carrito))
   })
-  tabla.append(fila);
-
-//BOTON BORRAR
-  let botones_borrar = document.querySelectorAll(".borrar_elemento");
-  
-  for (let boton of botones_borrar) {
-    boton.addEventListener("click", borrar_del_carrito);
-  }
 }
-//FIN COMPRA
-let seccion_btn_compra = document.getElementById ("cuerpo_carrito")
-let btn_fin_compra = document.createElement ("div")
-btn_fin_compra.innerHTML = `<button onclick= "finalizar_compra()" class="btn-danger boton_comprar">Comprar</button>`
-
-seccion_btn_compra.append(btn_fin_compra)
-
-function finalizar_compra(){
-  //BOTON COMPRAR
-    let div_boton = document.querySelectorAll(".boton_comprar")
-  
-    for (let boton of div_boton) {
-      boton.addEventListener("click", fin_compra);
-    }
-}
-
-function fin_compra(e){
-  let tataraabuelo = e.target.parentNode.parentNode;
-  tataraabuelo.remove();
-}
-
 
 //newsletter
-
 class Usuario_newsletter {
   constructor(nombre, apellido, email) {
     this.nombre = nombre;
