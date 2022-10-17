@@ -1,55 +1,69 @@
 //CARDS DE PRODUCTOS CREADA DESDE JS
 let lista_productos=[];
 
-  fetch("../JS/productos.json")
-  .then(response => response.json())
-  .then(data=> {
-    data.forEach (data =>{
-      lista_productos.push(data)
-    })
-  })
-
-console.log(lista_productos)
-
 let contenedor_productos = document.getElementById("products");
 
 let contenedor_carrito = document.getElementById("tbody");
 
-let boton_vaciar = document.getElementById("vaciar_carrito")
+let boton_terminar = document.getElementById("terminar_compra")
+
+let total_carrito_lateral = document.getElementById('total_carrito_lat')
 
 let carrito = [];
+
+let boton_carrito = document.getElementById('carrito_button');
+
+let boton_vaciar = document.getElementById('vaciar_carrito');
 
 document.addEventListener('DOMContentLoaded', () =>{
   if (localStorage.getItem('carrito')){
     carrito = JSON.parse(localStorage.getItem('carrito'))
     actualizar_carrito()
+    boton_carrito.classList.remove('disabled');
+  }else{
+    boton_carrito.classList.add('disabled');
   }
 })
-
-boton_vaciar.addEventListener('click', () => {
-    carrito.length = 0
-    actualizar_carrito
+boton_vaciar.addEventListener('click', function(){
+  carrito = []
+  actualizar_carrito();
 })
 
-lista_productos.forEach((producto) => {
-    let div = document.createElement("div");
-    div.innerHTML = `<div class="card style_card" style="width: 18rem;" id="${producto.id}">
-                      <img src="${producto.imagen}" class="card-img-top img_card" alt="">
-                      <div class="card-body">
-                      <h5 class="card-title titulo_card">${producto.nombre}</h5>
-                      <span class="precio">$${producto.precio}</span> <br>
-                      <a href="#" id="boton_agregar${producto.id}"class="btn btn-dark boton_comprar" >Agregar al carrito</a>
-                      </div>
-                      </div>`;
+boton_terminar.addEventListener('click', function(){
+  window.location.href = "http://127.0.0.1:5500/pages/carrito.html"
+})
 
-    contenedor_productos.append(div)
+function mostrar_prods(){
+    lista_productos.map((producto) => {
+      let div = document.createElement("div");
+      div.innerHTML = `<div class="card style_card" style="width: 18rem;" id="${producto.id}">
+                        <img src="${producto.imagen}" class="card-img-top img_card" alt="">
+                        <div class="card-body">
+                        <h5 class="card-title titulo_card">${producto.nombre}</h5>
+                        <span class="precio">$${producto.precio}</span> <br>
+                        <a href="#" id="boton_agregar${producto.id}"class="btn btn-dark boton_comprar" >Agregar al carrito</a>
+                        </div>
+                        </div>`;
 
-    let button = document.getElementById(`boton_agregar${producto.id}`)
-    button.addEventListener ('click', ()=>{
-    agregar_al_carrito(producto.id)
+      contenedor_productos.append(div)
+
+      let button = document.getElementById(`boton_agregar${producto.id}`)
+      button.addEventListener ('click', ()=>{
+      agregar_al_carrito(producto.id)
+      })
+      
+  });
+}
+
+fetch("../JS/productos.json")
+  .then(response => response.json())
+  .then(data=> {
+    data.forEach (data =>{
+      lista_productos.push(data)
     })
-    
-});
+    console.log(lista_productos)
+    mostrar_prods();
+  })
 
 //AGREGAR AL CARRITO
 let agregar_al_carrito = (productoId) => {
@@ -68,7 +82,6 @@ else{
   carrito.push(item)
   console.log (carrito)
 }
-
 actualizar_carrito()
 
 }
@@ -78,6 +91,10 @@ let eliminar_del_carrito = (productoId) =>{
   let indice = carrito.indexOf(item)
   carrito.splice(indice, 1)
   actualizar_carrito()
+  if(carrito.length === 0){
+    carrito = []
+    localStorage.removeItem('carrito')
+  }
 }
 
 let actualizar_carrito = () => {
@@ -94,6 +111,14 @@ let actualizar_carrito = () => {
 
     localStorage.setItem('carrito', JSON.stringify(carrito))
   })
+  const precioFinal = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0)
+  console.log(total_carrito_lateral);
+  total_carrito_lateral.innerHTML = `<span>El total de la orden es $${precioFinal} </span>`
+  if(!carrito.length || !carrito){
+    boton_carrito.classList.add('disabled');
+  }else{
+    boton_carrito.classList.remove('disabled');
+  }
 }
 
 //newsletter
@@ -119,7 +144,7 @@ form.addEventListener("submit", function (e) {
   ) {
     Swal.fire({
       icon: "success",
-      text: "Bienvenido/a a nuestra comunidad, ya estas registrado.",
+      text: `${ingreso_usuario.value} te has subscrito satisfactoriamente!`,
       width: '50rem',
       background: "#ffffff",
       confirmButtonColor: "#9b9b9b",
@@ -146,7 +171,7 @@ form.addEventListener("submit", function (e) {
   } else {
     Swal.fire({
       icon: "error",
-      text: "Error al loguearse, por favor completa todos los campos.",
+      text: "Por favor, completá todos los campos",
       width: '50rem',
       background: "#ffffff",
       confirmButtonColor: "#9b9b9b",
@@ -211,3 +236,4 @@ function cuotas (precio, cuota, nombre){
 console.log("el precio de", producto.nombre, "es:", producto.precio);
 descuento(producto.nombre, producto.precio)
 cuotas(producto.precio, ingreso_cuota, producto.nombre);*/
+

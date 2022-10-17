@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>Clara-indumentaria</title>
@@ -30,19 +30,19 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="./index.html">Inicio</a>
+                <a class="nav-link" href="#">Productos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./productos.html">Productos</a>
+                <a class="nav-link" href="#">New colection</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./colection.html">New colection</a>
+                <a class="nav-link" href="#">Contacto</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./contacto.html">Contacto</a>
+                <a class="nav-link" href="./pages/carrito.html">Tu orden</a>
               </li>
             </ul>
-            <a class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" id="abrirCarrito">
+            <a id="carrito_button" class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" id="abrirCarrito">
                 CARRITO   
             </a>
           </div>
@@ -78,39 +78,44 @@
                 </table>
             </div>
         </div>
-        <button id ="vaciar_carrito" class="boton_comprar">Comprar</button>
+        <span id="total_carrito_lat">El total de la compra es:</span>
+        <button id="vaciar_carrito" class="boton_comprar">Vaciar carrito</button>
+        <button id="terminar_compra" class="boton_comprar">Terminar compra</button>
     </div>
+    <h1>Productos destacados</h1>
     <div id ="contenedor" class="contenedor_padre">
         <div id="products"></div>
     </div> 
 </main>   
 <footer>
-    <div class="newsletter">
-        <p>SUSCRIBETE A NUESTRO NEWSLETTER PARA RECIBIR NOVEDADES</p>
-            <div class="form_container">
-                <form class="form_news" action="" id="formulario">        
-                    <label for="text">Nombre</label>
-                    <input type="text" id="nombre_usuario"> <br>
-            
-                    <label for="text">Apellido</label>
-                    <input type="text" id="apellido_usuario"><br>
-            
-                    <label for="mail">Email</label>
-                    <input type="mail" id="email_usuario"><br>
-
-                    <button class="boton_enviar" type="submit">Enviar</button>
-                </form>
-            </div>
+    <div class="form_container">
+      <h3>SUBSCRIBITE A NUESTRO NEWSLETTER</h3>
+      <form class="form_news" id="formulario">        
+          <div>
+            <label for="text">Nombre</label>
+            <input type="text" id="nombre_usuario"> 
+          </div>
+          <div>
+            <label for="text">Apellido</label>
+            <input type="text" id="apellido_usuario">
+         </div>
+          <div>
+            <label for="mail">Email</label>
+            <input type="mail" id="email_usuario"><br>
+          </div>
+          <button class="boton_enviar" type="submit">Enviar</button>
+      </form>
     </div>
     <div class="copy">
       <p>Copyright © 2022 claraindumentaria. Todos los derechos reservados</p>
     </div>
 </footer>
-    <script src="../JS/miarchivo.js"></script> 
+    <script src="./JS/miarchivo.js"></script> 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
-</body>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </html>
